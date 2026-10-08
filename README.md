@@ -1,166 +1,236 @@
-# 🧠 VERIDEXA — Intelligent Data Analyst Suite
+<div align="center">
+
+<img src="assets/banner.svg" alt="VERIDEXA — animated banner" width="100%"/>
+
+### 🧠 Intelligent Data Analyst Suite — now with live 3D
 
 ![CI](https://github.com/OWNER/REPO/actions/workflows/ci.yml/badge.svg)
+![Python](https://img.shields.io/badge/Python-3.10--3.12-3776AB?logo=python&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-app-FF4B4B?logo=streamlit&logoColor=white)
+![Plotly](https://img.shields.io/badge/Plotly-3D%20charts-3F4F75?logo=plotly&logoColor=white)
+![Three.js](https://img.shields.io/badge/Three.js-WebGL%20hero-000000?logo=threedotjs&logoColor=white)
+![No API keys](https://img.shields.io/badge/API%20keys-none%20required-34D6C4)
+![Hallucinated numbers](https://img.shields.io/badge/hallucinated%20numbers-0-1DD1A1)
 
-An AI-powered data analysis and business intelligence platform. Sign up, upload a CSV/Excel file, and get automatic data profiling, natural-language querying, AI-style insights, forecasting, anomaly detection, customer segmentation, and one-click exportable reports — all backed by real Pandas computation, **never LLM-hallucinated numbers.**
+**[✨ Features](#-features) · [🏗 Architecture](#-architecture) · [🚀 Quick start](#-quick-start) · [💬 Try these questions](#-try-these-questions) · [🗂 Structure](#-project-structure) · [🛣 Roadmap](#-roadmap)**
 
-## Why VERIDEXA is different
+</div>
 
-Most "chat with your data" tools let an LLM guess at numbers, which makes them unreliable past a demo. VERIDEXA keeps a hard separation: **only `modules/query_engine.py` is allowed to produce a number**, and it does so by parsing a question into a validated plan (operation + real column names, checked against the live dataset) and then running actual Pandas aggregation. The "AI Analyst" only ever *phrases* numbers that have already been computed — it never invents one. This means the app is **100% functional with zero API keys** — no LLM subscription required.
+---
 
-## What's built and working
+Sign up, upload a CSV/Excel file, and get automatic profiling, natural-language querying, forecasting, anomaly detection, customer segmentation, **interactive 3D exploration**, and one-click reports — all backed by real Pandas computation, **never LLM-hallucinated numbers.**
 
-- 🔐 **Full auth flow** — sign up / log in / log out, hashed + salted passwords (PBKDF2-HMAC-SHA256, stdlib-only), a change-password flow, temporary account lockout after repeated failed logins, and an enforced session timeout — backed by a local SQLite `users` table with WAL mode for safe concurrent multi-user access.
-- 📂 **Upload & Clean** — CSV / Excel / JSON / Parquet upload (up to several GB, configurable) with validation, encoding/delimiter sniffing, automatic dtype inference, missing-value/duplicate/outlier detection, and one-click cleaning actions (drop dupes, fill strategies, outlier capping/removal, type conversion).
-- 🔗 **Combine / Join** — load several files into one session and join any two of them (inner/left/right/outer) on matching key columns, producing a new table you can analyze, export, or join again.
-- 💾 **Persistent storage** — optionally save any dataset (raw upload or joined result) to your account as Parquet-in-SQLite, so it's still there next time you log in from any machine — on top of the default fast, in-memory-only session mode.
-- 🔍 **Data Explorer** — full profiling dashboard (overview, data quality, numeric stats, categorical breakdowns) with interactive filters (date range + up to 5 auto-detected category columns + a numeric range).
-- 📊 **Analytics Dashboard** — auto-adapting KPI cards and trend/breakdown charts that gracefully skip whatever columns a given dataset doesn't have.
-- 🤖 **AI Analyst** — a chat interface that answers plain-English questions via the validated query engine, with a four-part **Finding / Explanation / Business Impact / Recommendation** insight for every answer, auto-picked chart, and simple conversational memory (resolves "it"/"that" to the last metric discussed). Optional LLM-powered rephrasing supports Groq, OpenAI, Anthropic, or a local Ollama server — the app is 100% functional with none of them configured.
-- 📈 **Automated EDA** — one-click report: correlations, outliers, key findings, and recommendations, all derived from real computed facts.
-- 🔮 **Forecasting** — explainable linear-trend projection (OLS) with a widening confidence band, or a Holt-Winters seasonal model (trend + repeating cycle) with an inspectable trend/seasonal/residual decomposition chart — both ship with a clear "not a guarantee" disclaimer.
-- ⚠️ **Anomaly Detection** — IQR-based outlier flagging with a per-record risk level and a plain-language reason.
-- 👥 **Customer Segmentation** — RFM (Recency/Frequency/Monetary) rule-based segments with written explanations, or K-Means clustering on any two numeric columns.
-- 💡 **AI Recommendations** — a prioritized action list synthesized from whatever analysis you've already run this session.
-- 📄 **Reports** — export any table as CSV/Excel, plus a combined full-session report as HTML or a **native PDF** (no browser print dialog needed).
-- ✅ **Tested + CI** — a pytest suite covering the loader, profiler, query engine, forecasting, anomaly detection, segmentation, and auth modules, run automatically on every push via GitHub Actions across Python 3.10–3.12.
-- 🔒 **Security basics** — every column reference in a query plan is re-validated against the live DataFrame right before execution (defense in depth), no `eval`/blind code execution anywhere, input validation on signup, and a real logging layer under `logs/app.log`.
+> 💡 **Click any ▶ section below to expand it.**
 
-## Architecture
+## 🎯 Why VERIDEXA is different
 
+Most "chat with your data" tools let an LLM guess at numbers. VERIDEXA keeps a hard separation: **only `modules/query_engine.py` may produce a number.** The AI Analyst only *phrases* numbers that were already computed. No API key needed.
+
+## 🏗 Architecture
+
+<div align="center">
+<img src="assets/pipeline.svg" alt="Animated query pipeline" width="100%"/>
+</div>
+
+<details>
+<summary><b>▶ Same flow as a diagram (click to expand)</b></summary>
+
+```mermaid
+flowchart LR
+    Q[💬 Question] --> P[🧩 build_plan<br/>validated QueryPlan]
+    P --> V{Columns exist<br/>in live DataFrame?}
+    V -- no --> E[Friendly error]
+    V -- yes --> X[🔒 execute_plan<br/>real Pandas]
+    X --> N[✍️ narrate<br/>Finding · Explanation · Impact · Recommendation]
+    N --> C[📊 Auto-picked chart]
+    style X fill:#34D6C4,color:#000
+    style V fill:#6C5CE7,color:#fff
 ```
-Question (English) → query_engine.build_plan() → validated QueryPlan
-                                                        │
-                                             query_engine.execute_plan()
-                                                        │
-                                          real Pandas aggregation (the ONLY
-                                           place a number is computed)
-                                                        │
-                                          insight_generator.narrate()
-                                     (phrases the facts — never invents one)
-```
 
-## Tech stack
+</details>
 
-| Layer | Technology |
-|---|---|
-| Language | Python 3.12 |
-| Frontend | Streamlit |
-| Data | Pandas, NumPy, PyArrow (Parquet) |
-| Auth + storage DB | SQLite in WAL mode (`veridexa.db`, stdlib `sqlite3`) — accounts, audit log, and saved datasets |
-| Visualization | Plotly |
-| Machine Learning | scikit-learn (K-Means) |
-| Forecasting | NumPy OLS linear regression, statsmodels Holt-Winters + seasonal decomposition |
-| Report export | HTML, Excel (openpyxl), native PDF (xhtml2pdf) |
-| Password hashing | stdlib `hashlib` (PBKDF2-HMAC-SHA256) — no extra crypto dependency |
-| Testing / CI | pytest, GitHub Actions |
+## ✨ Features
 
-## Installation
+### 🧊 3D & animated experience
+
+| | Feature | What you get |
+|---|---|---|
+| 🌐 | **WebGL landing hero** | Three.js icosahedron + particle swarm — auto-rotates, drag to orbit |
+| 🃏 | **Mouse-tilt feature cards** | True 3D perspective that follows your cursor |
+| 🧊 | **3D Explorer page** | Draggable 3D scatter, correlation surface, density landscape |
+| 🔢 | **Count-up KPI cards** | Numbers animate from 0, with inline sparklines |
+| 🎬 | **Animated charts** | Draw-in trend lines and a play-button bar race |
+| 👥 | **3D cluster view** | K-Means results rotate in 3D when you pick 3+ features |
+
+### 🧰 Core analytics
+
+<details>
+<summary><b>▶ 🔐 Auth, upload &amp; data prep</b></summary>
+
+- **Full auth flow** — PBKDF2-HMAC-SHA256 hashing, lockout after repeated failures, enforced session timeout, WAL-mode SQLite
+- **Upload & Clean** — CSV / Excel / JSON / Parquet, encoding sniffing, dtype inference, dupes / missing / outlier cleaning
+- **Combine / Join** — inner / left / right / outer joins across loaded files
+- **Persistent storage** — save datasets to your account as Parquet-in-SQLite
+
+</details>
+
+<details>
+<summary><b>▶ 📊 Exploration &amp; dashboards</b></summary>
+
+- **Data Explorer** — overview, quality, numeric stats, categorical breakdowns, interactive filters
+- **Analytics Dashboard** — auto-adapting KPIs, trends, breakdowns, correlation (2D heatmap ⇄ 3D surface)
+- **Automated EDA** — correlations, outliers, findings, recommendations
+
+</details>
+
+<details>
+<summary><b>▶ 🤖 AI Analyst, forecasting &amp; segmentation</b></summary>
+
+- **AI Analyst** — chat with a Finding / Explanation / Business Impact / Recommendation answer; resolves "it" / "that"; optional Groq / OpenAI / Anthropic / Ollama rephrasing
+- **Forecasting** — OLS linear trend or Holt-Winters seasonal, with confidence bands and decomposition
+- **Anomaly Detection** — IQR flags with risk level and plain-language reason
+- **Segmentation** — RFM rules or K-Means (2D or 3D)
+- **AI Recommendations** — prioritized actions from whatever you've run
+- **Reports** — CSV / Excel / HTML / native PDF
+
+</details>
+
+### 🚀 Power-ups (20 extras)
+
+<details>
+<summary><b>▶ See all 20</b></summary>
+
+| # | Feature | # | Feature |
+|---|---|---|---|
+| 1 | 🌓 Light / Dark theme toggle | 11 | ⭐ Pin favorite datasets |
+| 2 | 🔎 Command-palette page jump | 12 | 📝 Blank CSV template download |
+| 3 | 🩺 Data Health Score (0–100) | 13 | 🕒 Activity Log page |
+| 4 | 🚦 Per-column quality traffic lights | 14 | 🔔 Toast notifications |
+| 5 | ✨ KPI sparklines | 15 | 🔢 Compact ⇄ full number format |
+| 6 | ☁️ Word cloud | 16 | 💾 Chart → standalone HTML |
+| 7 | 📐 Period-over-period card | 17 | 📤 Chart data → CSV |
+| 8 | 🆚 Dataset diff / compare | 18 | 🔍 Global full-text row search |
+| 9 | ⧉ One-click dataset clone | 19 | 🧭 Session summary widget |
+| 10 | ↩️ Undo last cleaning action | 20 | 🎯 "Suggest best chart" recommender |
+
+</details>
+
+## 🚀 Quick start
 
 ```bash
-# from the VERIDEXA/ folder
 python -m venv venv
 source venv/bin/activate        # Windows: venv\Scripts\activate
-
 pip install -r requirements.txt
-```
-
-Optional — copy `.env.example` to `.env` if you want to later enable LLM-powered rephrasing of insights (fully optional; the app works without it):
-
-```bash
-cp .env.example .env
-```
-
-## Run it
-
-```bash
 streamlit run app.py
 ```
 
-Open the URL Streamlit prints (usually `http://localhost:8501`). You'll land on the VERIDEXA sign-up/login screen first — create an account to get started.
+Open the URL Streamlit prints (usually `http://localhost:8501`) and create an account.
 
-## Run the tests
+<details>
+<summary><b>▶ Optional: enable LLM rephrasing</b></summary>
+
+```bash
+cp .env.example .env   # then add a Groq / OpenAI / Anthropic key, or point at local Ollama
+```
+
+Fully optional — the app works without it.
+
+</details>
+
+<details>
+<summary><b>▶ Run the tests</b></summary>
 
 ```bash
 pytest
 ```
 
-## Example questions to try in the AI Analyst
+Covers the loader, profiler, query engine, forecasting, anomaly detection, segmentation, and auth. CI runs on Python 3.10–3.12.
 
-- What is the total revenue?
-- Which region generated the highest revenue?
-- What is the monthly revenue trend?
-- Is there a correlation between quantity and profit?
-- Average profit
-- Top 5 category by revenue
-- (follow-up) what about its monthly trend?
+</details>
 
-## Project structure
+## 💬 Try these questions
 
+<details open>
+<summary><b>▶ Click to copy ideas into the AI Analyst</b></summary>
+
+```text
+What is the total revenue?
+Which region generated the highest revenue?
+What is the monthly revenue trend?
+Is there a correlation between quantity and profit?
+Average profit
+Top 5 category by revenue
+what about its monthly trend?        ← follow-up, resolves "its"
 ```
+
+</details>
+
+## 🧱 Tech stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | Streamlit + Three.js (landing hero) |
+| Data | Pandas, NumPy, PyArrow |
+| Visualization | Plotly (2D, 3D, animated frames) |
+| ML / Forecasting | scikit-learn, NumPy OLS, statsmodels Holt-Winters |
+| Auth + storage | SQLite (WAL), stdlib `hashlib` PBKDF2 |
+| Export | HTML, Excel (openpyxl), PDF (xhtml2pdf) |
+| Testing / CI | pytest, GitHub Actions |
+
+## 🗂 Project structure
+
+<details>
+<summary><b>▶ Expand the tree</b></summary>
+
+```text
 VERIDEXA/
-├── app.py                        # Streamlit entry point — auth gate + all page routing
-├── requirements.txt
-├── .env.example
-├── pytest.ini
-│
-├── .streamlit/
-│   └── config.toml               # Dark theme
-│
-├── config/
-│   └── settings.py                # Central config, reads .env
-│
+├── app.py                     # Entry point — auth gate, sidebar, page routing
+├── assets/                    # Animated README SVGs
+├── config/settings.py
 ├── modules/
-│   ├── db.py                      # SQLite connection + schema (users, audit_log, ...)
-│   ├── auth.py                    # Signup/login/password hashing — the auth backbone
-│   ├── ui_auth.py                 # Landing page + login/signup screens (Streamlit UI)
-│   ├── data_loader.py             # File ingestion + validation + dtype inference
-│   ├── data_cleaner.py            # Cleaning actions (dupes, missing, outliers, types)
-│   ├── data_profiler.py           # Profiling stats (overview, quality, numeric, categorical)
-│   ├── filters.py                 # Reusable interactive filter widgets
-│   ├── dashboard.py               # Analytics Dashboard rendering
-│   ├── query_engine.py            # ⭐ The validated NL→Pandas backbone (AI Analyst core)
-│   ├── insight_generator.py       # Four-part Finding/Explanation/Impact/Recommendation
-│   ├── ai_analyzer.py             # Optional LLM phrasing layer (off by default)
-│   ├── eda_generator.py           # Automated EDA report
-│   ├── forecasting.py             # Linear-trend forecasting with confidence bands
-│   ├── anomaly_detection.py       # IQR-based anomaly flagging
-│   ├── segmentation.py            # RFM + K-Means customer segmentation
-│   ├── recommendation_engine.py   # Prioritized action list synthesis
-│   ├── report_generator.py        # CSV/Excel/HTML export
-│   └── visualization.py           # Centralized Plotly chart builders
-│
-├── utils/
-│   ├── logger.py
-│   ├── validators.py
-│   └── helpers.py
-│
+│   ├── auth.py / db.py        # Accounts, audit log, saved datasets
+│   ├── ui_auth.py             # 3D landing page + login / signup
+│   ├── data_loader.py / data_cleaner.py / data_profiler.py
+│   ├── dashboard.py           # Animated KPIs, 3D toggles, period-over-period
+│   ├── query_engine.py        # ⭐ The only place a number is computed
+│   ├── insight_generator.py / ai_analyzer.py
+│   ├── eda_generator.py / forecasting.py / anomaly_detection.py
+│   ├── segmentation.py / recommendation_engine.py
+│   ├── report_generator.py
+│   ├── visualization.py       # 2D, 3D and animated Plotly builders
+│   └── extra_features.py      # Health score, word cloud, diff, sparklines…
+├── utils/                     # logger, validators, helpers
 ├── tests/
-│   ├── conftest.py
-│   ├── test_data_loader.py
-│   ├── test_profiler.py
-│   ├── test_query_engine.py
-│   ├── test_forecasting.py
-│   ├── test_anomaly_segmentation.py
-│   └── test_auth.py
-│
 └── logs/
-    └── app.log                    # Runtime log (gitignored)
 ```
 
-## Roadmap (not yet built)
+</details>
 
-The original spec sketched 50 stretch features (live DB/API connectors, SHAP feature importance, ARIMA/Prophet, RBAC, audit dashboards, PPT export, multi-tenant support, etc.). This build focuses on a solid, fully-working core end-to-end rather than spreading thin across all fifty. Natural next additions, in rough priority order:
+## 🛣 Roadmap
 
-1. True external data connectors (Google Sheets / Postgres / MySQL) via `connectors/`
-2. Swap in a real LLM for `ai_analyzer.py` phrasing (Groq/OpenAI/Anthropic/local Ollama — the abstraction is already there)
-3. Role-based access control + audit log viewer in the UI (the `audit_log` table already exists)
-4. PDF/PowerPoint export alongside the existing CSV/Excel/HTML
-5. Scheduled email/Slack report delivery
-6. CI pipeline running `pytest` on every push
+- [x] Auth, upload, join, persistent storage
+- [x] AI Analyst, forecasting, anomalies, segmentation, reports (CSV / Excel / HTML / PDF)
+- [x] CI with pytest
+- [x] 3D explorer, animated charts, activity log viewer
+- [ ] External connectors (Google Sheets / Postgres / MySQL)
+- [ ] Real LLM phrasing in `ai_analyzer.py`
+- [ ] Role-based access control
+- [ ] PowerPoint export
+- [ ] Scheduled email / Slack reports
 
-## Security notes
+## 🔒 Security notes
 
-- Passwords are never stored in plaintext; PBKDF2-HMAC-SHA256 with a unique random salt per user and 260,000 iterations.
-- Every AI Analyst query is executed through a validator that re-checks every column name against the live DataFrame immediately before running — a malformed or malicious question simply gets a friendly error, never a code path to arbitrary execution.
-- This is a portfolio/demo app: the SQLite auth DB is local and unencrypted at rest, and there's no HTTPS/session-cookie hardening layer — don't use it to store real user data in production without adding those.
+<details>
+<summary><b>▶ Read before deploying</b></summary>
+
+- Passwords: PBKDF2-HMAC-SHA256, unique salt per user, 260,000 iterations.
+- Every AI Analyst query re-validates each column name against the live DataFrame immediately before execution; no `eval`.
+- This is a portfolio/demo app: the SQLite auth DB is local and unencrypted at rest, with no HTTPS or cookie hardening. Add those before storing real user data.
+
+</details>
+
+<div align="center">
+
+<sub>Built with Pandas, Plotly &amp; Three.js · Every number is computed, never guessed.</sub>
+
+</div>
