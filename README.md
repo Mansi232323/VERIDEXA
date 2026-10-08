@@ -23,13 +23,19 @@ Sign up, upload a CSV/Excel file, and get automatic profiling, natural-language 
 
 ---
 
-## 🚀 Project Demo
+## 🚀 Live Demo & Project Video
 
 <p align="center">
+  <a href="https://veridexa.streamlit.app/">
+    <img src="https://img.shields.io/badge/🌐%20Live%20Demo-VERIDEXA-success?style=for-the-badge" alt="Live Demo">
+  </a>
+  &nbsp;&nbsp;
   <a href="https://drive.google.com/file/d/1x-atkjEluRMP1ZnkZv_-dLw4DuDRajMJ/view?usp=sharing">
-    <img src="https://img.shields.io/badge/▶️%20Watch%20Demo-Google%20Drive-blue?style=for-the-badge&logo=google-drive" alt="Watch Demo">
+    <img src="https://img.shields.io/badge/▶️%20Demo%20Video-Google%20Drive-blue?style=for-the-badge&logo=google-drive" alt="Demo Video">
   </a>
 </p>
+
+---
 
 ## 🎯 Why VERIDEXA is different
 
