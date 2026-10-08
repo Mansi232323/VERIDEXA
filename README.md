@@ -2,7 +2,8 @@
 
 <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=800&size=42&duration=2500&pause=1000&color=FF69B4&center=true&vCenter=true&width=700&height=70&lines=VERIDEXA" alt="VERIDEXA" />
 <br/>
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=20&duration=3500&pause=1200&color=FF69B4&center=true&vCenter=true&width=700&height=40&lines=%F0%9F%A7%A0+Intelligent+Data+Analyst+Suite%2C+now+with+live+3D" alt="Intelligent Data Analyst Suite" />
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=20&duration=3500&pause=1200&color=FF69B4&center=true&vCenter=true&width=700&height=40&lines=%F0%9F%A7%A0+Intelligent+Data+Analyst+Suite" 
+alt="Intelligent Data Analyst Suite"/>
 
 ![Python](https://img.shields.io/badge/Python-3.10--3.12-3776AB?logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-app-FF4B4B?logo=streamlit&logoColor=white)
