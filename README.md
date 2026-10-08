@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/banner.svg" alt="VERIDEXA animated banner" width="100%"/>
+# VERIDEXA
 
 ### 🧠 Intelligent Data Analyst Suite, now with live 3D
 
@@ -130,12 +130,7 @@ flowchart TD
 
 ## 🏗 Architecture
 
-<div align="center">
-<img src="assets/pipeline.svg" alt="Animated query pipeline" width="100%"/>
-</div>
-
-<details>
-<summary><b>▶ Same flow as a diagram (click to expand)</b></summary>
+The query pipeline at a glance:
 
 ```mermaid
 flowchart LR
@@ -148,8 +143,6 @@ flowchart LR
     style X fill:#34D6C4,color:#000
     style V fill:#6C5CE7,color:#fff
 ```
-
-</details>
 
 ### Layered view
 
@@ -1356,7 +1349,6 @@ flowchart LR
 ```text
 VERIDEXA/
 ├── app.py                     # Entry point: auth gate, sidebar, page routing
-├── assets/                    # Animated README SVGs
 ├── config/settings.py
 ├── modules/
 │   ├── auth.py / db.py        # Accounts, audit log, saved datasets
