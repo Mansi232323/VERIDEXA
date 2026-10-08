@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="assets/banner.svg" alt="VERIDEXA — animated banner" width="100%"/>
+<img src="assets/banner.svg" alt="VERIDEXA animated banner" width="100%"/>
 
-### 🧠 Intelligent Data Analyst Suite — now with live 3D
+### 🧠 Intelligent Data Analyst Suite, now with live 3D
 
 ![CI](https://github.com/OWNER/REPO/actions/workflows/ci.yml/badge.svg)
 ![Python](https://img.shields.io/badge/Python-3.10--3.12-3776AB?logo=python&logoColor=white)
@@ -18,7 +18,7 @@
 
 ---
 
-Sign up, upload a CSV/Excel file, and get automatic profiling, natural-language querying, forecasting, anomaly detection, customer segmentation, **interactive 3D exploration**, and one-click reports — all backed by real Pandas computation, **never LLM-hallucinated numbers.**
+Sign up, upload a CSV/Excel file, and get automatic profiling, natural-language querying, forecasting, anomaly detection, customer segmentation, **interactive 3D exploration**, and one-click reports, all backed by real Pandas computation, **never LLM-hallucinated numbers.**
 
 > 💡 **Click any ▶ section below to expand it.** Every major feature has its own flowchart so you can see exactly *how* it works, not just *what* it does.
 
@@ -57,8 +57,8 @@ VERIDEXA keeps a **hard separation of responsibilities**:
 | Understand the question | `build_plan` (rule-based planner) | ❌ No |
 | Check the plan is legal | Column validator against the live DataFrame | ❌ No |
 | **Compute the answer** | **`modules/query_engine.py` (real Pandas)** | ✅ **Only this module** |
-| Phrase the answer in words | `narrate` / optional LLM rephrase | ❌ No — it only receives numbers that were already computed |
-| Draw the chart | Auto chart picker + Plotly | ❌ No — it plots computed results |
+| Phrase the answer in words | `narrate` / optional LLM rephrase | ❌ No, it only receives numbers that were already computed |
+| Draw the chart | Auto chart picker + Plotly | ❌ No, it plots computed results |
 
 **Only `modules/query_engine.py` may produce a number.** The AI Analyst only *phrases* numbers that were already computed. No API key needed.
 
@@ -204,7 +204,7 @@ flowchart TB
 
 ### Module dependency map
 
-Which module talks to which. Notice that `ai_analyzer` and `insight_generator` depend on `query_engine` — never the other way around.
+Which module talks to which. Notice that `ai_analyzer` and `insight_generator` depend on `query_engine`, never the other way around.
 
 ```mermaid
 flowchart LR
@@ -282,7 +282,7 @@ sequenceDiagram
 
 | | Feature | What you get |
 |---|---|---|
-| 🌐 | **WebGL landing hero** | Three.js icosahedron + particle swarm — auto-rotates, drag to orbit |
+| 🌐 | **WebGL landing hero** | Three.js icosahedron + particle swarm, auto-rotates, drag to orbit |
 | 🃏 | **Mouse-tilt feature cards** | True 3D perspective that follows your cursor |
 | 🧊 | **3D Explorer page** | Draggable 3D scatter, correlation surface, density landscape |
 | 🔢 | **Count-up KPI cards** | Numbers animate from 0, with inline sparklines |
@@ -294,12 +294,12 @@ sequenceDiagram
 <details>
 <summary><b>▶ 🔐 Auth, upload &amp; data prep</b></summary>
 
-- **Full auth flow** — PBKDF2-HMAC-SHA256 hashing, lockout after repeated failures, enforced session timeout, WAL-mode SQLite
-- **Upload & Clean** — CSV / Excel / JSON / Parquet, encoding sniffing, dtype inference, dupes / missing / outlier cleaning
-- **Combine / Join** — inner / left / right / outer joins across loaded files
-- **Persistent storage** — save datasets to your account as Parquet-in-SQLite
+- **Full auth flow**: PBKDF2-HMAC-SHA256 hashing, lockout after repeated failures, enforced session timeout, WAL-mode SQLite
+- **Upload & Clean**: CSV / Excel / JSON / Parquet, encoding sniffing, dtype inference, dupes / missing / outlier cleaning
+- **Combine / Join**: inner / left / right / outer joins across loaded files
+- **Persistent storage**: save datasets to your account as Parquet-in-SQLite
 
-**Why it matters:** garbage in, garbage out. Every analysis downstream trusts the cleaned DataFrame, so this stage is deliberately transparent — each cleaning action is logged and can be undone.
+**Why it matters:** garbage in, garbage out. Every analysis downstream trusts the cleaned DataFrame, so this stage is deliberately transparent: each cleaning action is logged and can be undone.
 
 See the [Auth flowchart](#-authentication--session-lifecycle) and the [Upload & Clean flowchart](#-upload--clean-pipeline).
 
@@ -308,11 +308,11 @@ See the [Auth flowchart](#-authentication--session-lifecycle) and the [Upload & 
 <details>
 <summary><b>▶ 📊 Exploration &amp; dashboards</b></summary>
 
-- **Data Explorer** — overview, quality, numeric stats, categorical breakdowns, interactive filters
-- **Analytics Dashboard** — auto-adapting KPIs, trends, breakdowns, correlation (2D heatmap ⇄ 3D surface)
-- **Automated EDA** — correlations, outliers, findings, recommendations
+- **Data Explorer**: overview, quality, numeric stats, categorical breakdowns, interactive filters
+- **Analytics Dashboard**: auto-adapting KPIs, trends, breakdowns, correlation (2D heatmap ⇄ 3D surface)
+- **Automated EDA**: correlations, outliers, findings, recommendations
 
-**Why it matters:** the dashboard inspects your column types and names and decides what to show. A sales file gets revenue KPIs and a monthly trend; an HR file gets headcount and tenure distributions — no configuration.
+**Why it matters:** the dashboard inspects your column types and names and decides what to show. A sales file gets revenue KPIs and a monthly trend; an HR file gets headcount and tenure distributions. No configuration is needed.
 
 See the [Dashboard adaptation flowchart](#-dashboard-auto-adaptation) and the [Chart recommender](#-auto-chart-picker--suggest-best-chart).
 
@@ -321,14 +321,14 @@ See the [Dashboard adaptation flowchart](#-dashboard-auto-adaptation) and the [C
 <details>
 <summary><b>▶ 🤖 AI Analyst, forecasting &amp; segmentation</b></summary>
 
-- **AI Analyst** — chat with a Finding / Explanation / Business Impact / Recommendation answer; resolves "it" / "that"; optional Groq / OpenAI / Anthropic / Ollama rephrasing
-- **Forecasting** — OLS linear trend or Holt-Winters seasonal, with confidence bands and decomposition
-- **Anomaly Detection** — IQR flags with risk level and plain-language reason
-- **Segmentation** — RFM rules or K-Means (2D or 3D)
-- **AI Recommendations** — prioritized actions from whatever you've run
-- **Reports** — CSV / Excel / HTML / native PDF
+- **AI Analyst**: chat with a Finding / Explanation / Business Impact / Recommendation answer; resolves "it" / "that"; optional Groq / OpenAI / Anthropic / Ollama rephrasing
+- **Forecasting**: OLS linear trend or Holt-Winters seasonal, with confidence bands and decomposition
+- **Anomaly Detection**: IQR flags with risk level and plain-language reason
+- **Segmentation**: RFM rules or K-Means (2D or 3D)
+- **AI Recommendations**: prioritized actions from whatever you've run
+- **Reports**: CSV / Excel / HTML / native PDF
 
-**Why it matters:** each of these is a self-contained module with the same contract — *DataFrame in, computed result + plain-language explanation out*.
+**Why it matters:** each of these is a self-contained module with the same contract: *DataFrame in, computed result + plain-language explanation out*.
 
 See the [AI Analyst](#-ai-analyst-in-depth), [Forecasting](#-forecasting-model-selection), [Anomaly](#-anomaly-detection-iqr), [Segmentation](#-customer-segmentation) and [Reports](#-report-generation) flowcharts.
 
@@ -343,7 +343,7 @@ See the [AI Analyst](#-ai-analyst-in-depth), [Forecasting](#-forecasting-model-s
 |---|---|---|---|
 | 1 | 🌓 Light / Dark theme toggle | 11 | ⭐ Pin favorite datasets |
 | 2 | 🔎 Command-palette page jump | 12 | 📝 Blank CSV template download |
-| 3 | 🩺 Data Health Score (0–100) | 13 | 🕒 Activity Log page |
+| 3 | 🩺 Data Health Score (0 to 100) | 13 | 🕒 Activity Log page |
 | 4 | 🚦 Per-column quality traffic lights | 14 | 🔔 Toast notifications |
 | 5 | ✨ KPI sparklines | 15 | 🔢 Compact ⇄ full number format |
 | 6 | ☁️ Word cloud | 16 | 💾 Chart → standalone HTML |
@@ -410,7 +410,7 @@ stateDiagram-v2
     Anonymous --> Registered: sign up
     Registered --> Active: log in OK
     Active --> Active: any action refreshes last_seen
-    Active --> Expired: idle > timeout
+    Active --> Expired: idle past timeout
     Expired --> Active: log in OK
     Registered --> Locked: too many failed logins
     Active --> Locked: too many failed re-auth
@@ -425,7 +425,7 @@ stateDiagram-v2
 <details open>
 <summary><b>▶ From raw file to analysis-ready DataFrame</b></summary>
 
-**What happens:** the loader detects the file type, sniffs the text encoding for CSVs (so a Latin-1 export doesn't crash), infers dtypes (including dates stored as strings) and hands the result to the cleaner. The cleaner offers three families of fixes — duplicates, missing values, outliers — and records a snapshot before every action so **Undo** can restore it.
+**What happens:** the loader detects the file type, sniffs the text encoding for CSVs (so a Latin-1 export doesn't crash), infers dtypes (including dates stored as strings) and hands the result to the cleaner. The cleaner offers three families of fixes (duplicates, missing values, and outliers) and records a snapshot before every action so **Undo** can restore it.
 
 ```mermaid
 flowchart TD
@@ -445,7 +445,7 @@ flowchart TD
     DF --> I1["Strip column whitespace<br/>make names unique"]
     I1 --> I2["Infer dtypes<br/>numeric · datetime · category · text"]
     I2 --> I3["Compute data profile<br/>nulls · dupes · cardinality"]
-    I3 --> HS["🩺 Data Health Score 0–100"]
+    I3 --> HS["🩺 Data Health Score 0 to 100"]
     HS --> SHOW["Preview + quality traffic lights"]
 
     SHOW --> Q{"Clean the data?"}
@@ -475,7 +475,7 @@ flowchart TD
 
 #### 🩺 How the Data Health Score is built
 
-The 0–100 score summarises how analysis-ready a dataset is. It is a weighted blend of four penalties, each normalised to 0–1:
+The 0 to 100 score summarises how analysis-ready a dataset is. It is a weighted blend of four penalties, each normalised to 0 to 1:
 
 ```mermaid
 flowchart LR
@@ -486,7 +486,7 @@ flowchart LR
     W["Weighted penalty sum"] --> S["Score = 100 − penalty × 100"]
     S --> B{"Band"}
     B -- "≥ 85" --> G["🟢 Healthy"]
-    B -- "60 – 84" --> Y["🟡 Needs attention"]
+    B -- "60 to 84" --> Y["🟡 Needs attention"]
     B -- "< 60" --> R["🔴 Risky"]
 ```
 
@@ -498,7 +498,7 @@ flowchart LR
 flowchart TD
     COL["For each column"] --> N{"Missing %"}
     N -- "> 30%" --> RED["🔴"]
-    N -- "5 – 30%" --> YEL["🟡"]
+    N -- "5 to 30%" --> YEL["🟡"]
     N -- "< 5%" --> CK{"Constant or<br/>near-constant?"}
     CK -- Yes --> YEL
     CK -- No --> GRN["🟢"]
@@ -565,7 +565,7 @@ flowchart LR
     BL --> DIFF["🆚 Diff vs another dataset"]
 ```
 
-**Dataset diff — what is compared:**
+**Dataset diff, what is compared:**
 
 ```mermaid
 flowchart TD
@@ -733,7 +733,7 @@ flowchart TD
 
 #### 2. Column matching and validation
 
-Words in the question are fuzzily matched against real column names. Whatever the matcher proposes is **re-checked against the live DataFrame immediately before execution** — so a stale or hallucinated column name cannot get through.
+Words in the question are fuzzily matched against real column names. Whatever the matcher proposes is **re-checked against the live DataFrame immediately before execution**, so a stale or hallucinated column name cannot get through.
 
 ```mermaid
 flowchart TD
@@ -748,7 +748,7 @@ flowchart TD
     style EX fill:#34D6C4,color:#000
 ```
 
-#### 3. Execution — the only place numbers appear
+#### 3. Execution: the only place numbers appear
 
 ```mermaid
 flowchart TD
@@ -884,7 +884,7 @@ flowchart TD
     T -- Yes --> DIST["distance = how many IQRs beyond the fence"]
     DIST --> RISK{"Risk level"}
     RISK -- "< 1 IQR beyond" --> LOW["🟡 Low"]
-    RISK -- "1 – 3 IQR beyond" --> MED["🟠 Medium"]
+    RISK -- "1 to 3 IQR beyond" --> MED["🟠 Medium"]
     RISK -- "> 3 IQR beyond" --> HIGH["🔴 High"]
     LOW --> WHY
     MED --> WHY
@@ -910,7 +910,7 @@ flowchart TD
 
     M -- "RFM" --> RF1["Map columns<br/>customer_id · order_date · amount"]
     RF1 --> RF2["Recency = days since last order<br/>Frequency = number of orders<br/>Monetary = total spend"]
-    RF2 --> RF3["Score each 1–5 by quantile"]
+    RF2 --> RF3["Score each 1 to 5 by quantile"]
     RF3 --> RF4{"Rule-based labels"}
     RF4 --> L1["🏆 Champions<br/>high R, F, M"]
     RF4 --> L2["💙 Loyal"]
@@ -1213,7 +1213,7 @@ flowchart LR
 cp .env.example .env   # then add a Groq / OpenAI / Anthropic key, or point at local Ollama
 ```
 
-Fully optional — the app works without it. See the [LLM rephrasing flowchart](#-ai-analyst-in-depth) for how it is sandboxed.
+Fully optional. The app works without it. See the [LLM rephrasing flowchart](#-ai-analyst-in-depth) for how it is sandboxed.
 
 </details>
 
@@ -1224,7 +1224,7 @@ Fully optional — the app works without it. See the [LLM rephrasing flowchart](
 pytest
 ```
 
-Covers the loader, profiler, query engine, forecasting, anomaly detection, segmentation, and auth. CI runs on Python 3.10–3.12.
+Covers the loader, profiler, query engine, forecasting, anomaly detection, segmentation, and auth. CI runs on Python 3.10 to 3.12.
 
 </details>
 
@@ -1268,7 +1268,7 @@ All settings are read from `config/settings.py`, which in turn reads `.env` if p
 | `GROQ_API_KEY` / `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` | *(empty)* | Only for optional rephrasing |
 | `OLLAMA_HOST` | `http://localhost:11434` | Local model endpoint |
 
-> Variable names and defaults are illustrative — keep this table in sync with your real `settings.py` and `.env.example`.
+> Variable names and defaults are illustrative. Keep this table in sync with your real `settings.py` and `.env.example`.
 
 ```mermaid
 flowchart LR
@@ -1355,7 +1355,7 @@ flowchart LR
 
 ```text
 VERIDEXA/
-├── app.py                     # Entry point — auth gate, sidebar, page routing
+├── app.py                     # Entry point: auth gate, sidebar, page routing
 ├── assets/                    # Animated README SVGs
 ├── config/settings.py
 ├── modules/
@@ -1391,7 +1391,7 @@ VERIDEXA/
 | `modules/data_cleaner.py` | Dupes / missing / outliers, undo snapshots | Transforms data |
 | `modules/data_profiler.py` | Column-level profile used across the app | Descriptive stats |
 | `modules/dashboard.py` | Role detection, KPI + chart layout | Calls `query_engine` |
-| `modules/query_engine.py` | **`build_plan`, validation, `execute_plan`** | ✅ **Yes — the only one for Q&A** |
+| `modules/query_engine.py` | **`build_plan`, validation, `execute_plan`** | ✅ **Yes, the only one for Q&A** |
 | `modules/insight_generator.py` | Turns results into Finding / Explanation / Impact / Recommendation | No |
 | `modules/ai_analyzer.py` | Chat orchestration, follow-up context, optional LLM rephrase | No |
 | `modules/eda_generator.py` | Automated EDA findings | Descriptive stats |
@@ -1403,7 +1403,7 @@ VERIDEXA/
 | `modules/visualization.py` | 2D, 3D, animated Plotly builders; chart picker | No |
 | `modules/extra_features.py` | Health score, word cloud, diff, sparklines, search | Descriptive stats |
 | `utils/` | Logging, input validators, small helpers | No |
-| `tests/` | pytest suites per module | — |
+| `tests/` | pytest suites per module | n/a |
 
 </details>
 
@@ -1501,9 +1501,9 @@ flowchart TD
 |---|---|---|
 | Stolen DB file | Passwords are hashed, not stored | Encryption at rest |
 | Brute-force login | Lockout + audit log | IP-level rate limiting |
-| Prompt / code injection via question | Questions become a data `QueryPlan`; no code execution | — |
-| LLM changing numbers | Output rejected if numbers don't match | — |
-| Network sniffing | — | HTTPS |
+| Prompt / code injection via question | Questions become a data `QueryPlan`; no code execution | None |
+| LLM changing numbers | Output rejected if numbers don't match | None |
+| Network sniffing | None | HTTPS |
 | Malicious upload | Type check | Antivirus / sandbox, stricter limits |
 
 </details>
@@ -1543,7 +1543,7 @@ flowchart TD
 No. Every feature works without one. A key only enables optional rephrasing of the final sentences.
 
 **Can the AI Analyst be wrong?**
-It can *misunderstand* a question (e.g. pick the wrong column), but it cannot *invent* a number — every number is a real Pandas result you can verify in the result table.
+It can *misunderstand* a question (e.g. pick the wrong column), but it cannot *invent* a number: every number is a real Pandas result you can verify in the result table.
 
 **How is this different from asking ChatGPT about my CSV?**
 A chat LLM reads your data as text and predicts an answer. VERIDEXA converts your question to a structured plan and runs real code on the actual DataFrame.
@@ -1552,13 +1552,13 @@ A chat LLM reads your data as text and predicts an answer. VERIDEXA converts you
 In the session (memory) while you work. If you click Save, it is stored locally as Parquet bytes in the SQLite file.
 
 **Does my data leave my machine?**
-Not unless you enable an external LLM provider — and even then only the already-computed narration text is sent, never your raw rows.
+Not unless you enable an external LLM provider, and even then only the already-computed narration text is sent, never your raw rows.
 
 **How big a file can I load?**
 Limited by RAM and `MAX_UPLOAD_MB`. For files above a few hundred MB, consider pre-aggregating or using the planned database connectors.
 
 **Can I add my own question types?**
-Yes — add an intent in `build_plan`, an executor branch in `execute_plan`, and a narration template. Because all numbers flow through `query_engine.py`, the guarantee is preserved.
+Yes, add an intent in `build_plan`, an executor branch in `execute_plan`, and a narration template. Because all numbers flow through `query_engine.py`, the guarantee is preserved.
 
 ```mermaid
 flowchart LR
@@ -1636,7 +1636,7 @@ flowchart LR
     B --> C["💻 Code + tests"]
     C --> D["✅ pytest passes locally"]
     D --> E["📤 Open pull request"]
-    E --> F["🤖 CI runs on 3.10 – 3.12"]
+    E --> F["🤖 CI runs on 3.10 to 3.12"]
     F --> G{"Review"}
     G -- "Changes requested" --> C
     G -- Approved --> H["🎉 Merge"]
@@ -1646,7 +1646,7 @@ flowchart LR
 
 1. **Never compute a user-facing number outside `modules/query_engine.py`** (or the clearly-labelled descriptive-stats modules). If you need a new figure, add it to the engine.
 2. Every new feature ships with a pytest test that checks results against plain Pandas.
-3. Keep optional dependencies optional — the app must run with zero API keys.
+3. Keep optional dependencies optional. The app must run with zero API keys.
 4. Log meaningful user actions through `utils/logger.py`.
 
 </details>
