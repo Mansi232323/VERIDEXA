@@ -2,15 +2,13 @@
 
 <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=800&size=42&duration=2500&pause=1000&color=FF69B4&center=true&vCenter=true&width=700&height=70&lines=VERIDEXA" alt="VERIDEXA" />
 <br/>
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=20&duration=3500&pause=1200&color=FF69B4&center=true&vCenter=true&width=700&height=40&lines=%F0%9F%A7%A0+Intelligent+Data+Analyst+Suite%2C+now+with+live+3D" alt="Intelligent Data Analyst Suite, now with live 3D" />
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=20&duration=3500&pause=1200&color=FF69B4&center=true&vCenter=true&width=700&height=40&lines=%F0%9F%A7%A0+Intelligent+Data+Analyst+Suite%2C+now+with+live+3D" alt="Intelligent Data Analyst Suite" />
 
-![CI](https://github.com/OWNER/REPO/actions/workflows/ci.yml/badge.svg)
 ![Python](https://img.shields.io/badge/Python-3.10--3.12-3776AB?logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-app-FF4B4B?logo=streamlit&logoColor=white)
 ![Plotly](https://img.shields.io/badge/Plotly-3D%20charts-3F4F75?logo=plotly&logoColor=white)
 ![Three.js](https://img.shields.io/badge/Three.js-WebGL%20hero-000000?logo=threedotjs&logoColor=white)
-![No API keys](https://img.shields.io/badge/API%20keys-none%20required-34D6C4)
-![Hallucinated numbers](https://img.shields.io/badge/hallucinated%20numbers-0-1DD1A1)
+
 
 **[✨ Features](#-features) · [🏗 Architecture](#-architecture) · [🔄 Flowcharts](#-deep-dive-flowcharts) · [🚀 Quick start](#-quick-start) · [💬 Try these questions](#-try-these-questions) · [🗂 Structure](#-project-structure) · [🛣 Roadmap](#-roadmap)**
 
@@ -21,28 +19,6 @@
 Sign up, upload a CSV/Excel file, and get automatic profiling, natural-language querying, forecasting, anomaly detection, customer segmentation, **interactive 3D exploration**, and one-click reports, all backed by real Pandas computation, **never LLM-hallucinated numbers.**
 
 > 💡 **Click any ▶ section below to expand it.** Every major feature has its own flowchart so you can see exactly *how* it works, not just *what* it does.
-
----
-
-## 📑 Table of contents
-
-1. [Why VERIDEXA is different](#-why-veridexa-is-different)
-2. [The big picture](#-the-big-picture)
-3. [Architecture](#-architecture)
-4. [Features](#-features)
-5. [Deep-dive flowcharts](#-deep-dive-flowcharts)
-6. [Data model](#-data-model)
-7. [Quick start](#-quick-start)
-8. [Configuration](#-configuration)
-9. [Try these questions](#-try-these-questions)
-10. [Tech stack](#-tech-stack)
-11. [Project structure](#-project-structure)
-12. [Testing & CI](#-testing--ci)
-13. [Security notes](#-security-notes)
-14. [Troubleshooting](#-troubleshooting)
-15. [FAQ](#-faq)
-16. [Roadmap](#-roadmap)
-17. [Contributing](#-contributing)
 
 ---
 
