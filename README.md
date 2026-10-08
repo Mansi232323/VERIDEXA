@@ -23,6 +23,14 @@ Sign up, upload a CSV/Excel file, and get automatic profiling, natural-language 
 
 ---
 
+## 🚀 Project Demo
+
+<p align="center">
+  <a href="https://drive.google.com/file/d/1x-atkjEluRMP1ZnkZv_-dLw4DuDRajMJ/view?usp=sharing">
+    <img src="https://img.shields.io/badge/▶️%20Watch%20Demo-Google%20Drive-blue?style=for-the-badge&logo=google-drive" alt="Watch Demo">
+  </a>
+</p>
+
 ## 🎯 Why VERIDEXA is different
 
 Most "chat with your data" tools hand your table (or a summary of it) to an LLM and let it *guess* the answer. That works until the model quietly invents a total, rounds a percentage the wrong way, or confidently answers about a column that does not exist.
