@@ -344,7 +344,7 @@ def page_upload():
     with tab_upload:
         st.markdown("Upload a **CSV, Excel, JSON, or Parquet** file. Each file you load stays "
                     "available in this session, so you can upload several and join them below.")
-        uploaded = st.file_uploader("Choose a file", type=["csv", "xlsx", "xls", "json", "parquet"])
+        uploaded = st.file_uploader("Choose a file", type=["csv", "xlsx", "xls", "json", "parquet"],  max_upload_size=5120)
         if uploaded is not None and st.button("Load this file", type="primary", use_container_width=True):
             try:
                 df = load_uploaded_file(uploaded)
